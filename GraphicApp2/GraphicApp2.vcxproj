@@ -77,7 +77,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)Николаев_ВА__АСУбз23_1\GraphicApp2\glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -95,7 +96,8 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)Николаев_ВА__АСУбз23_1\GraphicApp2\glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,7 +113,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)Николаев_ВА__АСУбз23_1\GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,7 +132,8 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)Николаев_ВА__АСУбз23_1\GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

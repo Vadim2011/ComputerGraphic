@@ -25,7 +25,7 @@ int main()
 
     if (!window) {
        glfwTerminate();
-       return -1;
+       return 1;
     }
 
     glfwMakeContextCurrent(window);
