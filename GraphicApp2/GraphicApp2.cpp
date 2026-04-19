@@ -10,22 +10,26 @@
 int main()
 {
     if (!glfwInit()) {
-        fprintf(stderr, "ERROR: could not start GLFW3\n");
+        fprintf(stderr, "ERROR: could not start GLFW3 \n");
         return 1;
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 1);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+
+
 
     glfwInit();
 
     GLFWwindow* window = glfwCreateWindow(512, 512, "Mainwidow", NULL, NULL);
 
     if (!window) {
-        glfwTerminate();
+       glfwTerminate();
+       return -1;
     }
 
     glfwMakeContextCurrent(window);
@@ -34,9 +38,10 @@ int main()
 
     GLenum ret = glewInit();
     if (GLEW_OK != ret) {
-        fprintf(stderr, "ERROR: %S\n", glewGetErrorString(ret));
-        return 1;
+        fprintf(stderr, "ERROR: %S \n", glewGetErrorString(ret));
+        return -1;
     }
+
 
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.5f, 0.2f, 0.7f, 0.0f);
@@ -55,6 +60,8 @@ int main()
         glfwPollEvents();
     }
 
+
+  
 
     glfwTerminate();
 
