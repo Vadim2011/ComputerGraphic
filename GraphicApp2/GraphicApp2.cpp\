@@ -1,4 +1,4 @@
-﻿
+
 #define GLEW_DLL
 #define GLFW_DLL
 
@@ -34,7 +34,7 @@ int main()
 
     GLenum ret = glewInit();
     if (GLEW_OK != ret) {
-        fprintf(stderr, "ERROR: %s \n", glewGetErrorString(ret));
+        fprintf(stderr, "ERROR: %S \n", glewGetErrorString(ret));
         return 1;
     }
 
