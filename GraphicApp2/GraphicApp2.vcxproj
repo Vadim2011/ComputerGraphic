@@ -149,9 +149,14 @@
   <ItemGroup>
     <None Include="glfw-3.4.bin.WIN64\lib-vc2022\glfw3.dll" />
     <None Include="glfw3.dll" />
+    <None Include="shaders\shader.frag" />
+    <None Include="shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw-3.4.bin.WIN64\lib-vc2022\glfw3dll.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
