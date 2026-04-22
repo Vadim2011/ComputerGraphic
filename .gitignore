@@ -5,3 +5,5 @@ x64/
 
 glfw-3.4.bin.WIN64/
 glew-2.1.0/
+glad/
+glm/

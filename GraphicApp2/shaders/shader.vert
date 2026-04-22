@@ -4,6 +4,12 @@ layout (location=0) in vec3 vp;
 
 uniform float u_aspect_ratio;
 
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 proj;
+
 void main() {
-   gl_Position = vec4( vp.x * u_aspect_ratio, vp.yz, 1.0);
+   // gl_Position = vec4( vp.x * u_aspect_ratio, vp.yz, 1.0);
+
+   gl_Position = proj * view * model * vec4( vp.x * u_aspect_ratio, vp.yz, 1.0);
 };

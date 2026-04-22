@@ -11,8 +11,12 @@
 #include <sstream>
 #include <string>
 
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <GL/glew.h>
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 
 
@@ -109,6 +113,19 @@ public:
     void setFloat4(const std::string& name, float v0, float v1, float v2, float v3) const
     {
         glUniform4f(glGetUniformLocation(ID, name.c_str()), v0, v1, v2, v3);
+    }
+    
+    void setVec2(const std::string& name, const glm::vec2& value) const {
+        glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+    }
+
+    void setVec3(const std::string& name, const glm::vec3& value) const {
+        glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+    }
+
+    void setMatrix4fv(const std::string& name, const glm::mat4& mat) const
+    {
+        glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
     }
 
 
