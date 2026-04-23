@@ -25,18 +25,18 @@
 
 const unsigned int SCR_WIDTH = 1024;
 const unsigned int SCR_HEIGHT = 768;
-const float aspectRatio = (float)SCR_HEIGHT / (float)SCR_WIDTH;
+// const float aspectRatio = (float)SCR_HEIGHT / (float)SCR_WIDTH;
 
 // ============================ glm
 // vectom glog coord  // this  global center coord
 // glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 
 // camera
-glm::vec3 cameraPos = glm::vec3(0.0f, 2.6f, 6.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 3.0f, 6.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     // move came delta
-const float cameraSpeed = 0.05f;
+const float cameraSpeed = 0.02f;
     // move mouse
 bool firstMouse = true;
 float pitch = 0.0;
@@ -71,10 +71,12 @@ int main()
     if (!window) {
         glfwTerminate();
         return 1;
-    }
+    } 
 
     glfwMakeContextCurrent(window);
     glewExperimental = GL_TRUE;
+
+    glEnable(GL_DEPTH_TEST); // Z - buffer depth
 
     // bound cursore to window and height + hanler mouse call
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -87,8 +89,11 @@ int main()
     }
 
     // load models   
-    Model loadedModel("RTC_NikolaevVA.obj");
-    glm::mat4 modelMatrix = glm::mat4(1.0f);
+    // Model loadedModel("./RTC_NikolaevVA.obj");
+    Model loadedModel("./RTC_NikolaevVA4.obj");
+    // Model loadedModel("./RTC_NikolaevVA7.obj");
+    // Model loadedModel("./Cube.obj");
+    glm::mat4 model = glm::mat4(1.0f); 
 
     // proj init perspective ================== PROJECTION on CAMERA ==========
       // матрица проекции вида
@@ -100,19 +105,21 @@ int main()
     while (!glfwWindowShouldClose(window)) {
 
         // render background color
-        glClearColor(0.2f, 0.2f, 0.6f, 0.0f);
+        glClearColor(0.1f, 0.1f, 0.2f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         ourShader.use();
-        ourShader.setFloat("u_aspect_ratio", aspectRatio);
+        // ourShader.setFloat("u_aspect_ratio", aspectRatio);
 
         // move Object =========================== MODEL matrix ================
         // move back
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -0.2f));
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
         // rotate X
         // model *= glm::rotate(glm::mat4(1.0f), (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
 
         // move camera (not move) ================ VIEW matrix ==================
+        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, true);
         }
@@ -136,15 +143,28 @@ int main()
         if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
             cameraPos -= cameraUp * cameraSpeed;  // down
         }
-
-        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-  
-         // ourShader.setFloat4("frag_colour", 0.5f, 0.8f, 0.2f, 1.0f);   
-
-        ourShader.setFloat3("lightColor", 0.5f, 0.8f, 0.2f);
+      
+     
         ourShader.setMatrix4fv("model", model);
         ourShader.setMatrix4fv("view", view);
         ourShader.setMatrix4fv("proj", proj);
+
+        ourShader.setVec3("light.position", glm::vec3(1.0f, 5.0f, 5.0f));
+
+        ourShader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f)); // Низкая интенсивность
+        ourShader.setVec3("light.diffuse", glm::vec3(0.8f, 0.8f, 0.8f)); // Средняя
+        ourShader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f)); // Полная
+        // Передача данных в шейдер материал
+        ourShader.setVec3("material.ambient", glm::vec3(0.8f, 0.5f, 0.5f));
+        ourShader.setVec3("material.diffuse", glm::vec3(0.8f, 0.7f, 0.6f));
+        ourShader.setVec3("material.specular", glm::vec3(0.7f, 0.7f, 0.7f));
+        ourShader.setFloat("material.shininess", 64.0f);
+
+        ourShader.setVec3("viewPos", cameraPos);
+
+        //glm::vec3 lightColor = glm::vec3(0.5f, 0.5f, 0.5f);        
+        // ourShader.setVec3("lightColor", lightColor);
+
 
         loadedModel.Draw(ourShader);
 
