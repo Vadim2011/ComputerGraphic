@@ -16,27 +16,16 @@
 #include <fstream>
 #include <sstream>
 
-// GLSL
-// VBO / VAO / EBO
-// VBO (vertex buffer object)
-// VAO (vertex array object)
-// EBO (element buffer object)
-
 
 const unsigned int SCR_WIDTH = 1024;
 const unsigned int SCR_HEIGHT = 768;
-// const float aspectRatio = (float)SCR_HEIGHT / (float)SCR_WIDTH;
 
-// ============================ glm
-// vectom glog coord  // this  global center coord
-// glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-
-// camera
+// const float aspectRatio = (float)SCR_HEIGHT / (float)SCR_WIDTH; // camera
 glm::vec3 cameraPos = glm::vec3(0.0f, 3.0f, 6.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     // move came delta
-const float cameraSpeed = 0.02f;
+const float cameraSpeed = 0.015f;
     // move mouse
 bool firstMouse = true;
 float pitch = 0.0;
@@ -90,36 +79,112 @@ int main()
 
     // load models   
     // Model loadedModel("./RTC_NikolaevVA.obj");
-    Model loadedModel("./RTC_NikolaevVA4.obj");
-    // Model loadedModel("./RTC_NikolaevVA7.obj");
-    // Model loadedModel("./Cube.obj");
-    glm::mat4 model = glm::mat4(1.0f); 
+    Model baseModel("./model/RTC_NikolaevVA_base.obj");
+    Model bottomModel("./model/RTC_NikolaevVA_bottom.obj");
+    Model middleModel("./model/RTC_NikolaevVA_middle.obj");
+    Model topModel("./model/RTC_NikolaevVA_top.obj");
 
-    // proj init perspective ================== PROJECTION on CAMERA ==========
-      // матрица проекции вида
-    glm::mat4 proj = glm::perspective(glm::radians(60.0f), (float)SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f);
+    // Model loadedModel("./Cube.obj");
+    // glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 model_base = glm::mat4(1.0f); 
+    glm::mat4 model_bottom = glm::mat4(1.0f);
+    glm::mat4 model_middle = glm::mat4(1.0f);
+    glm::mat4 model_top = glm::mat4(1.0f);
+
+    // матрица проекции вида
+    glm::mat4 proj = glm::perspective(glm::radians(60.0f), (float)SCR_WIDTH / SCR_HEIGHT, 0.1f, 80.0f);
 
     // create shader
-    Shader ourShader("shaders/shader.vert", "shaders/shader.frag");
+    // Shader ourShader("shaders/shader.vert", "shaders/shader.frag");    
+    Shader shader_base("shaders/shader.vert", "shaders/shader.frag");
+    Shader shader_bottom("shaders/shader.vert", "shaders/shader.frag");
+    Shader shader_middle("shaders/shader.vert", "shaders/shader.frag");
+    Shader shader_top("shaders/shader.vert", "shaders/shader.frag");
+    
+    float rotate_bottom = 0.0f;
+    float rotate_middle = 0.0f;
+    float rotate_top = 0.0f;
 
     while (!glfwWindowShouldClose(window)) {
+        shader_base.setLightMaterial(proj);
+        shader_bottom.setLightMaterial(proj);
+        shader_middle.setLightMaterial(proj);
+        shader_top.setLightMaterial(proj);
+
+        shader_base.use();
+        shader_bottom.use();
+        shader_middle.use();
+        shader_top.use();
 
         // render background color
         glClearColor(0.1f, 0.1f, 0.2f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-        ourShader.use();
+        shader_base.setMatrix4fv("model", model_base);
+        shader_base.setMatrix4fv("view", view);
+        shader_base.setVec3("viewPos", cameraPos);
+        baseModel.Draw(shader_base);
         // ourShader.setFloat("u_aspect_ratio", aspectRatio);
 
         // move Object =========================== MODEL matrix ================
-        // move back
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-        // rotate X
-        // model *= glm::rotate(glm::mat4(1.0f), (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
+        model_bottom = glm::mat4(1.0f);
+        if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+            rotate_bottom -= 1.0f;  // forward
+        }
+        if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
+            rotate_bottom += 1.0f;  // back
+        }
+        model_bottom = glm::rotate(model_bottom, glm::radians(rotate_bottom), glm::vec3(0.0f, 1.0f, 0.0f));
+        model_middle = glm::rotate(glm::mat4(1.0f), glm::radians(rotate_bottom), glm::vec3(0.0f, 1.0f, 0.0f));
+        model_top = glm::rotate(glm::mat4(1.0f), glm::radians(rotate_bottom), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        // move camera (not move) ================ VIEW matrix ==================
-        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
+        // ===============================================================================
+
+        if (glfwGetKey(window, GLFW_KEY_V) == GLFW_PRESS && rotate_middle > -134.0f) {
+            rotate_middle -= 1.0f;  
+        }
+        if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS && rotate_middle < 27.0f) {
+            rotate_middle += 1.0f;  
+        }
+
+        model_middle = glm::translate(model_middle, glm::vec3(0.89f, 1.84f, 0.0f));
+        model_top = glm::translate(model_top, glm::vec3(0.89f, 1.84f, 0.0f));
+
+        model_middle = glm::rotate(model_middle, glm::radians(rotate_middle), glm::vec3(0.0f, 0.0f, 1.0f));
+        model_top = glm::rotate(model_top, glm::radians(rotate_middle), glm::vec3(0.0f, 0.0f, 1.0f));
+
+        model_middle = glm::translate(model_middle, glm::vec3(-0.89f, -1.84f, 0.0f));
+        model_top = glm::translate(model_top, glm::vec3(-0.89f, -1.84f, 0.0f));
+
+        // ===============================================================================
+
+        if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS && rotate_top > -13.0f) {
+            rotate_top -= 1.0f;
+        }
+        if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS && rotate_top < 210.f) {
+            rotate_top += 1.0f;
+        }
+        model_top = glm::translate(model_top, glm::vec3(-1.0f, 3.14f, 0.0f));
+        model_top = glm::rotate(model_top, glm::radians(rotate_top), glm::vec3(0.0f, 0.0f, 1.0f));
+        model_top = glm::translate(model_top, glm::vec3(1.0f, -3.14f, 0.0f));
+
+        shader_bottom.setMatrix4fv("model", model_bottom);
+        shader_bottom.setMatrix4fv("view", view);
+        shader_bottom.setVec3("viewPos", cameraPos);
+        bottomModel.Draw(shader_bottom);
+
+        shader_middle.setMatrix4fv("model", model_middle);
+        shader_middle.setMatrix4fv("view", view);
+        shader_middle.setVec3("viewPos", cameraPos);
+        middleModel.Draw(shader_middle);
+
+        shader_top.setMatrix4fv("model", model_top);
+        shader_top.setMatrix4fv("view", view);
+        shader_top.setVec3("viewPos", cameraPos);
+        topModel.Draw(shader_top);
+        
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, true);
         }
@@ -143,30 +208,7 @@ int main()
         if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
             cameraPos -= cameraUp * cameraSpeed;  // down
         }
-      
-     
-        ourShader.setMatrix4fv("model", model);
-        ourShader.setMatrix4fv("view", view);
-        ourShader.setMatrix4fv("proj", proj);
 
-        ourShader.setVec3("light.position", glm::vec3(1.0f, 5.0f, 5.0f));
-
-        ourShader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f)); // Низкая интенсивность
-        ourShader.setVec3("light.diffuse", glm::vec3(0.8f, 0.8f, 0.8f)); // Средняя
-        ourShader.setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f)); // Полная
-        // Передача данных в шейдер материал
-        ourShader.setVec3("material.ambient", glm::vec3(0.8f, 0.5f, 0.5f));
-        ourShader.setVec3("material.diffuse", glm::vec3(0.8f, 0.7f, 0.6f));
-        ourShader.setVec3("material.specular", glm::vec3(0.7f, 0.7f, 0.7f));
-        ourShader.setFloat("material.shininess", 64.0f);
-
-        ourShader.setVec3("viewPos", cameraPos);
-
-        //glm::vec3 lightColor = glm::vec3(0.5f, 0.5f, 0.5f);        
-        // ourShader.setVec3("lightColor", lightColor);
-
-
-        loadedModel.Draw(ourShader);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -210,21 +252,4 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     cameraFront = glm::normalize(front);
-
-
-}
-
-
-
-
-
-
-
-
-// include "glm/glm.hpp"
-// include "glm/gtc/matrix_transform.hpp"
-// include "glm/gtc/type_ptr.hpp"
-
-
-
-
+};

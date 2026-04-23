@@ -131,6 +131,23 @@ public:
         glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
     }
 
+    void setLightMaterial(glm::mat4& proj) const {
+        this->setVec3("light.position", glm::vec3(1.0f, 5.0f, 5.0f));
+
+        this->setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        this->setVec3("light.diffuse", glm::vec3(0.8f, 0.8f, 0.8f));
+        this->setVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+
+        this->setVec3("material.ambient", glm::vec3(0.8f, 0.5f, 0.5f));
+        this->setVec3("material.diffuse", glm::vec3(0.8f, 0.7f, 0.6f));
+        this->setVec3("material.specular", glm::vec3(0.7f, 0.7f, 0.7f));
+        this->setFloat("material.shininess", 64.0f);
+                
+        this->setMatrix4fv("proj", proj);
+    }
+
+
+
 
     
 
