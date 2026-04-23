@@ -77,14 +77,14 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp\include;$(SolutionDir)assimp\build\include;$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -96,14 +96,14 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp\include;$(SolutionDir)assimp\build\include;$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -113,14 +113,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp\include;$(SolutionDir)assimp\build\include;$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;C:\Graphic_IRNITU\Николаев_ВА__АСУбз23_1\GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;C:\Graphic_IRNITU\Николаев_ВА__АСУбз23_1\GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,14 +132,14 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)assimp\include;$(SolutionDir)assimp\build\include;$(SolutionDir)glm;$(SolutionDir)glad\include;$(SolutionDir)glfw-3.4.bin.WIN64\include;$(SolutionDir)glew-2.1.0\include;$(SolutionDir)GraphicApp2\glew-2.1.0\include;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4273;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;C:\Graphic_IRNITU\Николаев_ВА__АСУбз23_1\GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)assimp;$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;C:\Graphic_IRNITU\Николаев_ВА__АСУбз23_1\GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;$(SolutionDir)GraphicApp2\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;User32.lib;GDI32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -156,6 +156,8 @@
     <Library Include="glfw-3.4.bin.WIN64\lib-vc2022\glfw3dll.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

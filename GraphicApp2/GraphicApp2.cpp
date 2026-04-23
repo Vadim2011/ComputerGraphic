@@ -7,15 +7,14 @@
 #include <GLFW/glfw3.h>
 
 #include "Shader.h"
+#include "Mesh.h"
+#include "Model.h"
 
 #include <iostream>
 #include <cmath>
 #include <array>
 #include <fstream>
 #include <sstream>
-
-
-
 
 // GLSL
 // VBO / VAO / EBO
@@ -24,8 +23,8 @@
 // EBO (element buffer object)
 
 
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1024;
+const unsigned int SCR_HEIGHT = 768;
 const float aspectRatio = (float)SCR_HEIGHT / (float)SCR_WIDTH;
 
 // ============================ glm
@@ -33,18 +32,18 @@ const float aspectRatio = (float)SCR_HEIGHT / (float)SCR_WIDTH;
 // glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 
 // camera
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 2.6f, 6.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     // move came delta
-// const float cameraSpeed = 0.05f;
-float cuttrentFrame, deltaTime, lastFrame;
+const float cameraSpeed = 0.05f;
     // move mouse
 bool firstMouse = true;
 float pitch = 0.0;
 float yaw = -90.0;
 float lastX = SCR_WIDTH / 2.0;
 float lastY = SCR_HEIGHT / 2.0;
+
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 
 
@@ -61,8 +60,8 @@ int main()
         return 1;
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -77,6 +76,9 @@ int main()
     glfwMakeContextCurrent(window);
     glewExperimental = GL_TRUE;
 
+    // bound cursore to window and height + hanler mouse call
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(window, mouse_callback);
 
     GLenum ret = glewInit();
     if (GLEW_OK != ret) {
@@ -84,56 +86,36 @@ int main()
         return 1;
     }
 
-    GLuint VBO, VAO, EBO;
-    
-	// vertex array object объект массива вершин
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-	// init VBO vertex buffer object
-    glGenBuffers(1, &VBO);    
-    glBindBuffer(GL_ARRAY_BUFFER, VBO); //  vbo
-    glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
+    // load models   
+    Model loadedModel("RTC_NikolaevVA.obj");
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
 
-	// configure vertex attributes
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
-    glEnableVertexAttribArray(0);
+    // proj init perspective ================== PROJECTION on CAMERA ==========
+      // матрица проекции вида
+    glm::mat4 proj = glm::perspective(glm::radians(60.0f), (float)SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f);
 
-    GLuint indicess[] = { 0, 1, 2,    1, 2, 3 };
-
-    // init EBO element buffer object
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); // 
-    // configure element attributes
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicess), indicess, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-       
     // create shader
     Shader ourShader("shaders/shader.vert", "shaders/shader.frag");
 
-    // bound cursore to window and height + hanler mouse call
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetCursorPosCallback(window, mouse_callback);
-
-
     while (!glfwWindowShouldClose(window)) {
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-            glfwSetWindowShouldClose(window, true);
-        }
+
+        // render background color
+        glClearColor(0.2f, 0.2f, 0.6f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        ourShader.use();
+        ourShader.setFloat("u_aspect_ratio", aspectRatio);
 
         // move Object =========================== MODEL matrix ================
         // move back
         glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -0.2f));
         // rotate X
-        model *= glm::rotate(glm::mat4(1.0f), (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
+        // model *= glm::rotate(glm::mat4(1.0f), (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
 
         // move camera (not move) ================ VIEW matrix ==================
-        // glm::mat4 view = glm::mat4(1.f);
-          cuttrentFrame = (float)glfwGetTime();
-          deltaTime = cuttrentFrame - lastFrame;
-          lastFrame = cuttrentFrame;
-          const float cameraSpeed = 3 * deltaTime;
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+            glfwSetWindowShouldClose(window, true);
+        }
 
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
             cameraPos += cameraSpeed * cameraFront;  // forward
@@ -156,35 +138,15 @@ int main()
         }
 
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+  
+         // ourShader.setFloat4("frag_colour", 0.5f, 0.8f, 0.2f, 1.0f);   
 
-        
-        // proj init perspective ================== PROJECTION on CAMERA ==========
-        // матрица проекции вида
-        glm::mat4 proj = glm::perspective(glm::radians(60.0f), (float)SCR_WIDTH / SCR_HEIGHT, 0.1f, 100.0f);
-
-
-		// render background color
-        glClearColor(0.2f, 0.2f, 0.6f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        ourShader.use();
-        ourShader.setFloat("u_aspect_ratio", aspectRatio);
-
-        GLfloat timeValue = static_cast<GLfloat>(glfwGetTime());
-        GLfloat greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-        GLfloat redValue = (cos(timeValue) / 2.0f) + 0.5f;
-
-        ourShader.setFloat4("frag_colour", redValue, greenValue, 0.2f, 1.0f);    
-
+        ourShader.setFloat3("lightColor", 0.5f, 0.8f, 0.2f);
         ourShader.setMatrix4fv("model", model);
         ourShader.setMatrix4fv("view", view);
         ourShader.setMatrix4fv("proj", proj);
 
-
-        glBindVertexArray(VAO); 
-
-        // glDrawArrays(GL_TRIANGLES, 0, 3);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        loadedModel.Draw(ourShader);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -195,6 +157,7 @@ int main()
 
     return 0;
 }
+
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
     float xpos = (float)xposIn;
