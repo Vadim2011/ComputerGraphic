@@ -1,0 +1,26 @@
+Все конфигурации / все платформы
+
+C/C++  Общие
+$(SolutionDir)assimp\include;
+$(SolutionDir)assimp\build\include;
+$(SolutionDir)glm;
+$(SolutionDir)glad\include;
+$(SolutionDir)glfw-3.4.bin.WIN64\include;
+$(SolutionDir)glew-2.1.0\include;
+<разные параметры>
+
+Компоновщик
+общие / доп катал библиот
+$(SolutionDir)assimp;
+$(SolutionDir)glfw-3.4.bin.WIN64\lib-vc2022;
+<разные параметры>
+
+  ввод  / доп зависим
+  assimp-vc143-mtd.lib;
+glfw3.lib;
+glfw3dll.lib;
+opengl32.lib;
+User32.lib;
+GDI32.lib;
+Shell32.lib;
+<разные параметры>
