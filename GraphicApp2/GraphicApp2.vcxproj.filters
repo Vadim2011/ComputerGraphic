@@ -18,15 +18,31 @@
     <ClCompile Include="GraphicApp2.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\НиколаевВА_АСУ23_1\GraphicApp\glew-2.1.0\src\glew.c">
+    <ClCompile Include="glew-2.1.0\src\glew.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="glew.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="glfw-3.4.bin.WIN64\lib-vc2022\glfw3.dll" />
     <None Include="glfw3.dll" />
+    <None Include="shaders\shader.frag" />
+    <None Include="shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw-3.4.bin.WIN64\lib-vc2022\glfw3dll.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Mesh.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
